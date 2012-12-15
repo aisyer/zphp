@@ -1,4 +1,6 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\dispatcher;
 
@@ -12,8 +14,7 @@ use framework\core\Context;
  * @author xodger@gmail.com
  * @package framework\dispatcher
  */
-abstract class RequestDispatcherBase implements IRequestDispatcher
-{
+abstract class RequestDispatcherBase implements IRequestDispatcher {
 
     /**
      * 默认动作
@@ -22,8 +23,7 @@ abstract class RequestDispatcherBase implements IRequestDispatcher
      */
     protected $defaultAction;
 
-    public function dispatch()
-    {
+    public function dispatch() {
         $ctrlClass = Context::getCtrlNamespace() . "\\" . $this->getCtrlClassName();
         $ctrlMethod = $this->getCtrlMethodName();
 

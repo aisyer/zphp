@@ -1,5 +1,7 @@
 <?php
+
 namespace framework\util;
+
 /**
  * Created by JetBrains PhpStorm.
  * User: mac
@@ -7,8 +9,8 @@ namespace framework\util;
  * Time: 下午8:43
  * To change this template use File | Settings | File Templates.
  */
-class Timers
-{
+class Timers {
+
     /**
      * An array of the arrays that represent
      * the timer information used by Timers::tick
@@ -72,14 +74,14 @@ class Timers
      * @static
      * @return void
      */
-    public static function tick()
-    {
+    public static function tick() {
         //++self::$ticks;
 
         $time = self::millitime();
 
         // Quit fast!
-        if ($time < self::$nextTime) return;
+        if ($time < self::$nextTime)
+            return;
         self::$nextTime = 0;
 
         foreach (self::$timers as $position => $timer) {
@@ -105,8 +107,7 @@ class Timers
      * @static
      * @return float
      */
-    private static function setNextTime($nextTime)
-    {
+    private static function setNextTime($nextTime) {
         if (self::$nextTime == 0 || self::$nextTime > $nextTime)
             self::$nextTime = $nextTime;
     }
@@ -117,8 +118,7 @@ class Timers
      * @static
      * @return float
      */
-    public static function millitime()
-    {
+    public static function millitime() {
         return microtime(true) * 1000; // this is faster and precise enough
     }
 
@@ -130,8 +130,7 @@ class Timers
      * @static
      * @return void
      */
-    public static function shutdown()
-    {
+    public static function shutdown() {
         foreach (self::$timers as $position => $timer) {
             call_user_func($timer['function']);
             unset(self::$timers[$position]);
@@ -155,8 +154,7 @@ class Timers
      *
      * @return integer
      */
-    public static function setTimeout($func, $milliseconds)
-    {
+    public static function setTimeout($func, $milliseconds) {
         if (!\is_callable($func)) {
             if (\is_string($func)) {
                 $func = \create_function('', $func);
@@ -185,8 +183,7 @@ class Timers
      *
      * @return integer
      */
-    public static function setInterval($func, $milliseconds)
-    {
+    public static function setInterval($func, $milliseconds) {
         if (!is_callable($func)) {
             if (is_string($func)) {
                 $func = create_function('', $func);
@@ -215,8 +212,7 @@ class Timers
      *
      * @return boolean
      */
-    public static function clearTimeout($timer)
-    {
+    public static function clearTimeout($timer) {
         if (isset(self::$timers[$timer])) {
             unset(self::$timers[$timer]);
             return true;
@@ -234,8 +230,7 @@ class Timers
      *
      * @return boolean
      */
-    public static function clearInterval($interval)
-    {
+    public static function clearInterval($interval) {
         if (isset(self::$intervals[$interval])) {
             unset(self::$intervals[$interval]);
             return true;
@@ -243,6 +238,7 @@ class Timers
 
         return false;
     }
+
 }
 
 /**

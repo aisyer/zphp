@@ -1,7 +1,6 @@
 <?php
-namespace framework\helper;
 
-use framework\manager;
+namespace framework\helper;
 
 /**
  * 联合Redis数据处理类
@@ -9,16 +8,16 @@ use framework\manager;
  * @author shenzhe
  * @package framework\helper
  */
-class StorageHelper
-{
+class StorageHelper {
+
     private static $cache = array();
 
-    public static function getInstance($type="redis", $name="storage", $pconnect=false)
-    {
+    public static function getInstance($type = "redis", $name = "storage", $pconnect = false) {
         $cacheType = '\\framework\\helper\\storage\\' . $type . 'Helper';
-        if (!isset(self::$cache[$type.$name])) {
-            self::$cache[$type.$name] = new $cacheType($name, $pconnect);
+        if (!isset(self::$cache[$type . $name])) {
+            self::$cache[$type . $name] = new $cacheType($name, $pconnect);
         }
-        return self::$cache[$type.$name];
+        return self::$cache[$type . $name];
     }
+
 }

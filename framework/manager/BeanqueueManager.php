@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\manager;
 
 use framework\config\BeanqueueConfiguration;
@@ -11,8 +12,8 @@ require(ROOT_PATH . '/lib/pheanstalk/pheanstalk_init.php');
  * @author zivn
  * @package framework\manager
  */
-class BeanqueueManager
-{
+class BeanqueueManager {
+
     /**
      * Beanqueue配置
      *
@@ -20,6 +21,7 @@ class BeanqueueManager
      */
     private static $configs;
     private static $bakconfigs;
+
     /**
      * Beanqueue实例
      *
@@ -32,8 +34,7 @@ class BeanqueueManager
      *
      * @param BeanqueueConfiguration $config
      */
-    public static function addConfigration($config)
-    {
+    public static function addConfigration($config) {
         if (isset($config['now']) && \is_array($config['now'])) {
             self::$configs = $config['now'];
         }
@@ -42,8 +43,7 @@ class BeanqueueManager
         }
     }
 
-    public static function getAllConf($bak = false)
-    {
+    public static function getAllConf($bak = false) {
         if ($bak) {
             return self::$bakconfigs;
         } else {
@@ -51,10 +51,10 @@ class BeanqueueManager
         }
     }
 
-    public static function getConf($id, $bak)
-    {
-        if (strlen($id) > 8) $id = substr($id, -8); // facebook的uid超过int范围
-        $id = (int)$id;
+    public static function getConf($id, $bak) {
+        if (strlen($id) > 8)
+            $id = substr($id, -8); // facebook的uid超过int范围
+        $id = (int) $id;
         $mcid = $id % 100;
         if ($bak) {
             foreach (self::$bakconfigs as $k => $v) {
@@ -72,8 +72,7 @@ class BeanqueueManager
         return $v;
     }
 
-    public function getInstance($id, $bak = false)
-    {
+    public function getInstance($id, $bak = false) {
         $conf = self::getConf($id, $bak);
         return self::_getMc($conf);
     }
@@ -83,12 +82,13 @@ class BeanqueueManager
      *
      * @return \Beanqueue
      */
-    public static function _getMc($conf)
-    {
+    public static function _getMc($conf) {
         $host = $conf['host'] . '_' . $conf['port'];
         if (isset(self::$instance[$host])) {
-            if (!self::$instance[$host]['enable']) return false;
-            if (\is_object(self::$instance[$host]['mc'])) return self::$instance[$host]['mc'];
+            if (!self::$instance[$host]['enable'])
+                return false;
+            if (\is_object(self::$instance[$host]['mc']))
+                return self::$instance[$host]['mc'];
         }
 
         self::$instance[$host]['enable'] = false;
@@ -102,8 +102,10 @@ class BeanqueueManager
             }
         }
 
-        if (!self::$instance[$host]['enable']) return false;
+        if (!self::$instance[$host]['enable'])
+            return false;
         return self::$instance[$host]['mc'];
     }
+
 }
 

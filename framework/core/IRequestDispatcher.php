@@ -1,4 +1,7 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
+
 namespace framework\core;
 
 /**
@@ -6,8 +9,8 @@ namespace framework\core;
  * @author xodger@gmail.com
  * @package framework\core
  */
-interface IRequestDispatcher
-{
+interface IRequestDispatcher {
+
     /**
      * 分发请求,该方法实现具体的Controller的执行。
      */

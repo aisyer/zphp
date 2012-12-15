@@ -1,5 +1,7 @@
 <?php
+
 namespace framework\manager;
+
 use framework\config\TokyoTyrantConfiguration;
 
 /**
@@ -8,14 +10,15 @@ use framework\config\TokyoTyrantConfiguration;
  * @author zivn
  * @package framework\manager
  */
-class TokyoTyrantManager
-{
+class TokyoTyrantManager {
+
     /**
      * TokyoTyrant配置
      *
      * @var <TokyoTyrantConfiguration>array
      */
     private static $configs;
+
     /**
      * TokyoTyrant实例
      *
@@ -29,8 +32,7 @@ class TokyoTyrantManager
      * @param string $name
      * @param TokyoTyrantConfiguration $config
      */
-    public static function addConfigration($name, TokyoTyrantConfiguration $config)
-    {
+    public static function addConfigration($name, TokyoTyrantConfiguration $config) {
         self::$configs[$name] = $config;
     }
 
@@ -40,8 +42,7 @@ class TokyoTyrantManager
      * @param string $name
      * @return \TokyoTyrant
      */
-    public static function getInstance($name)
-    {
+    public static function getInstance($name) {
         if (empty(self::$instances[$name])) {
             if (empty(self::$configs[$name])) {
                 return null;
@@ -57,4 +58,5 @@ class TokyoTyrantManager
 
         return self::$instances[$name];
     }
+
 }

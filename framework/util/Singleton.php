@@ -1,4 +1,6 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\util;
 
@@ -7,8 +9,8 @@ namespace framework\util;
  * @author xodger@gmail.com
  * @package framework\util
  */
-class Singleton
-{
+class Singleton {
+
     private static $instances = array();
 
     /**
@@ -16,8 +18,7 @@ class Singleton
      * @param String $className 类名
      * @return Object $className类的单独实例
      */
-    public static function get($className)
-    {
+    public static function get($className) {
         if (isset(self::$instances[$className])) {
             return self::$instances[$className];
         }
@@ -27,4 +28,5 @@ class Singleton
 
         return $instance;
     }
+
 }

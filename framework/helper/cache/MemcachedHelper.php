@@ -1,5 +1,7 @@
 <?php
+
 namespace framework\helper\cache;
+
 use framework\manager;
 
 /**
@@ -8,8 +10,8 @@ use framework\manager;
  * @author zivn
  * @package framework\helper
  */
-class MemcachedHelper implements ICacheHelper
-{
+class MemcachedHelper implements ICacheHelper {
+
     /**
      * Memcached对象
      *
@@ -22,24 +24,20 @@ class MemcachedHelper implements ICacheHelper
      *
      * @param bool $enable
      */
-    public function __construct($name="", $pconnect=false)
-    {
+    public function __construct($name = "", $pconnect = false) {
         $this->memcached = manager\MemcachedManager::getInstance($name, $pconnect);
     }
 
-    public  function enable()
-    {
+    public function enable() {
         return true;
     }
-
 
     /**
      * 取得Memcached对象
      *
      * @return \Memcached
      */
-    function getMemcached()
-    {
+    function getMemcached() {
         return $this->memcached;
     }
 
@@ -51,8 +49,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $expiration
      * @return bool
      */
-    public function add($key, $value, $expiration = 0)
-    {
+    public function add($key, $value, $expiration = 0) {
         return $this->memcached ? $this->memcached->add($key, $value, $expiration) : false;
     }
 
@@ -64,8 +61,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $expiration
      * @return bool
      */
-    public function replace($key, $value, $expiration = 0)
-    {
+    public function replace($key, $value, $expiration = 0) {
         return $this->memcached ? $this->memcached->replace($key, $value, $expiration) : false;
     }
 
@@ -77,8 +73,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $expiration
      * @return bool
      */
-    public function set($key, $value, $expiration = 0)
-    {
+    public function set($key, $value, $expiration = 0) {
         return $this->memcached ? $this->memcached->set($key, $value, $expiration) : false;
     }
 
@@ -89,8 +84,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $expiration
      * @return bool
      */
-    public function setMulti($items, $expiration = 0)
-    {
+    public function setMulti($items, $expiration = 0) {
         return $this->memcached ? $this->memcached->setMulti($items, $expiration) : false;
     }
 
@@ -100,8 +94,7 @@ class MemcachedHelper implements ICacheHelper
      * @param string $key
      * @return mixed
      */
-    public function get($key)
-    {
+    public function get($key) {
         return $this->memcached ? $this->memcached->get($key) : null;
     }
 
@@ -111,8 +104,7 @@ class MemcachedHelper implements ICacheHelper
      * @param array $keys
      * @return array
      */
-    public function getMulti($keys)
-    {
+    public function getMulti($keys) {
         return $this->memcached ? $this->memcached->getMulti($keys) : null;
     }
 
@@ -123,8 +115,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $offset
      * @return bool
      */
-    public function increment($key, $offset = 1)
-    {
+    public function increment($key, $offset = 1) {
         return $this->memcached ? $this->memcached->increment($key, $offset) : false;
     }
 
@@ -135,8 +126,7 @@ class MemcachedHelper implements ICacheHelper
      * @param int $offset
      * @return bool
      */
-    public function decrement($key, $offset = 1)
-    {
+    public function decrement($key, $offset = 1) {
         return $this->memcached ? $this->memcached->decrement($key, $offset) : false;
     }
 
@@ -146,8 +136,7 @@ class MemcachedHelper implements ICacheHelper
      * @param string $key
      * @return bool
      */
-    public function delete($key)
-    {
+    public function delete($key) {
         return $this->memcached ? $this->memcached->delete($key) : false;
     }
 
@@ -157,8 +146,7 @@ class MemcachedHelper implements ICacheHelper
      * @param array $keys
      * @return bool
      */
-    public function deleteMulti($keys)
-    {
+    public function deleteMulti($keys) {
         if (!$this->memcached || empty($keys)) {
             return false;
         }
@@ -175,8 +163,7 @@ class MemcachedHelper implements ICacheHelper
      *
      * @return bool
      */
-    public function flush()
-    {
+    public function flush() {
         return $this->memcached ? $this->memcached->flush() : false;
     }
 
@@ -185,8 +172,8 @@ class MemcachedHelper implements ICacheHelper
      *
      * @return array
      */
-    public function stat()
-    {
+    public function stat() {
         return $this->memcached ? $this->memcached->getStats() : null;
     }
+
 }

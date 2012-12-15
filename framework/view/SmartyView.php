@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\view;
 
 use framework\core\IView;
@@ -9,14 +10,15 @@ use framework\config\SmartyConfiguration;
  *
  * @package framework\view
  */
-class SmartyView implements IView
-{
+class SmartyView implements IView {
+
     /**
      * Smarty实例
      *
      * @var \Smarty
      */
     private static $smarty;
+
     /**
      * Smarty配置实例
      *
@@ -30,6 +32,7 @@ class SmartyView implements IView
      * @var string
      */
     private $fileName;
+
     /**
      * 模板数据
      *
@@ -43,8 +46,7 @@ class SmartyView implements IView
      * @param String $fileName Smarty模版文件名
      * @param mixed $model 用于展示的数据
      */
-    public function __construct($fileName, $model = null)
-    {
+    public function __construct($fileName, $model = null) {
         $this->fileName = $fileName;
         $this->model = $model;
     }
@@ -54,8 +56,7 @@ class SmartyView implements IView
      *
      * @param SmartyConfiguration $config
      */
-    public static function setConfiguration(SmartyConfiguration $config)
-    {
+    public static function setConfiguration(SmartyConfiguration $config) {
         self::$configuration = $config;
     }
 
@@ -64,8 +65,7 @@ class SmartyView implements IView
      *
      * @return SmartyConfiguration
      */
-    public static function getConfiguration()
-    {
+    public static function getConfiguration() {
         return self::$configuration;
     }
 
@@ -74,8 +74,7 @@ class SmartyView implements IView
      *
      * @return \Smarty
      */
-    private static function getSmarty()
-    {
+    private static function getSmarty() {
         if (!self::$smarty) {
             if (empty(self::$configuration)) {
                 throw new \Exception("please set smarty configuration with  SmartyView::setConfiguration()");
@@ -97,14 +96,12 @@ class SmartyView implements IView
         return self::$smarty;
     }
 
-
     /**
      * 获取数据
      *
      * @return mixed
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -113,8 +110,7 @@ class SmartyView implements IView
      *
      * @param mixed $model
      */
-    public function setModel($model)
-    {
+    public function setModel($model) {
         return $this->model = $model;
     }
 
@@ -122,8 +118,7 @@ class SmartyView implements IView
      * 展示视图
      *
      */
-    public function display()
-    {
+    public function display() {
         header("Content-Type: text/html; charset=utf-8");
 
         $this->output();
@@ -133,10 +128,10 @@ class SmartyView implements IView
      * 输出
      *
      */
-    public function output()
-    {
+    public function output() {
         $smarty = self::getSmarty();
         $smarty->assign($this->model);
         $smarty->display($this->fileName);
     }
+
 }

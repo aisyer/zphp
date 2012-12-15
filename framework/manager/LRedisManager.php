@@ -3,7 +3,6 @@
 namespace framework\manager;
 
 use framework\config\RedisConfiguration;
-use \Redis;
 
 /**
  * Redis管理工具，用于管理Redis对象的工具。
@@ -11,7 +10,7 @@ use \Redis;
  * @author zivn
  * @package framework\manager
  */
-class RedisManager {
+class LRedisManager {
 
     /**
      * Redis配置
@@ -51,13 +50,12 @@ class RedisManager {
 
             $config = self::$configs[$name];
 
-            $redis = new Redis();
             if ($pconnect) {
-                $redis->pconnect($config->host, $config->port, 5, $name);
+                $redis = \phpiredis_pconnect($config->host, $config->port, 5, $name);
             } else {
-                $redis->connect($config->host, $config->port, 5);
+                $redis = \phpiredis_connect($config->host, $config->port, 5);
             }
-            $redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
+            //$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
             self::$instances[$name] = $redis;
         }
 
@@ -80,7 +78,7 @@ class RedisManager {
 
         foreach (self::$instances as $redis) {
 
-            $redis->close();
+            \phpiredis_disconnect($redis);
         }
 
         return true;

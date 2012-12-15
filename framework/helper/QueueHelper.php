@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\helper;
 
 use framework\manager;
@@ -9,18 +10,16 @@ use framework\manager;
  * @author shenzhe
  * @package framework\helper
  */
-class QueueHelper
-{
+class QueueHelper {
+
     private static $cache = array();
 
-    public static function getInstance($type="redis", $name="queue", $pconnect)
-    {
+    public static function getInstance($type = "redis", $name = "queue", $pconnect) {
         $cacheType = '\\framework\\helper\\queue\\' . $type . 'Helper';
         if (!isset(self::$cache[$cacheType])) {
             self::$cache[$cacheType] = new $cacheType($name, $pconnect);
         }
         return self::$cache[$cacheType];
     }
-
 
 }

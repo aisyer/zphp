@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\helper;
 
 use \PDO;
@@ -9,26 +10,29 @@ use \PDO;
  * @author pzd
  * @package framework\helper
  */
-class PDOHelper
-{
+class PDOHelper {
+
     /**
      * pdo对象
      *
      * @var \PDO
      */
     private $pdo;
+
     /**
      * 数据库名
      *
      * @var string
      */
     private $dbName;
+
     /**
      * 数据表名
      *
      * @var string
      */
     private $tableName;
+
     /**
      * 类名
      *
@@ -42,8 +46,7 @@ class PDOHelper
      * @param string $className
      * @param string $dbName
      */
-    public function __construct($className, $dbName = null)
-    {
+    public function __construct($className, $dbName = null) {
         $this->className = $className;
 
         if (!empty($dbName)) {
@@ -56,8 +59,7 @@ class PDOHelper
      *
      * @return String
      */
-    function getDBName()
-    {
+    function getDBName() {
         return $this->dbName;
     }
 
@@ -66,8 +68,7 @@ class PDOHelper
      *
      * @param String $dbName
      */
-    function setDBName($dbName)
-    {
+    function setDBName($dbName) {
         $this->dbName = $dbName;
     }
 
@@ -76,8 +77,7 @@ class PDOHelper
      *
      * @return String
      */
-    function getTableName()
-    {
+    function getTableName() {
         if (empty($this->tableName)) {
             $classRef = new \ReflectionClass($this->className);
             $this->tableName = $classRef->getConstant('TABLE_NAME');
@@ -91,8 +91,7 @@ class PDOHelper
      *
      * @return String
      */
-    function getClassName()
-    {
+    function getClassName() {
         return $this->className;
     }
 
@@ -101,8 +100,7 @@ class PDOHelper
      *
      * @return String
      */
-    function getLibName()
-    {
+    function getLibName() {
         return "`{$this->getDBName()}`.`{$this->getTableName()}`";
     }
 
@@ -111,8 +109,7 @@ class PDOHelper
      *
      * @return \PDO
      */
-    function getPdo()
-    {
+    function getPdo() {
         return $this->pdo;
     }
 
@@ -121,8 +118,7 @@ class PDOHelper
      *
      * @param \PDO $pdo
      */
-    function setPdo($pdo)
-    {
+    function setPdo($pdo) {
         $this->pdo = $pdo;
     }
 
@@ -134,8 +130,7 @@ class PDOHelper
      * @param string $onDuplicate
      * @return int
      */
-    public function add($entity, $fields, $onDuplicate = null)
-    {
+    public function add($entity, $fields, $onDuplicate = null) {
         $strFields = '`' . implode('`,`', $fields) . '`';
         $strValues = ':' . implode(', :', $fields);
 
@@ -163,8 +158,7 @@ class PDOHelper
      * @param array $fields
      * @return bool
      */
-    public function addMulti($entitys, $fields)
-    {
+    public function addMulti($entitys, $fields) {
         $items = array();
         $params = array();
 
@@ -188,8 +182,7 @@ class PDOHelper
      * @param array $fields
      * @return int
      */
-    public function replace($entity, $fields)
-    {
+    public function replace($entity, $fields) {
         $strFields = '`' . implode('`,`', $fields) . '`';
         $strValues = ':' . implode(', :', $fields);
 
@@ -214,8 +207,7 @@ class PDOHelper
      * @param bool $change
      * @return bool
      */
-    public function update($fields, $params, $where, $change = false)
-    {
+    public function update($fields, $params, $where, $change = false) {
         if ($change) {
             $updateFields = array_map(__CLASS__ . '::changeFieldMap', $fields);
         } else {
@@ -236,8 +228,7 @@ class PDOHelper
      * @param string $fields
      * @return mixed
      */
-    public function fetchValue($where = '1', $params = null, $fields = '*')
-    {
+    public function fetchValue($where = '1', $params = null, $fields = '*') {
         $query = "SELECT {$fields} FROM {$this->getLibName()} WHERE {$where} limit 1";
         $statement = $this->pdo->prepare($query);
         $statement->execute($params);
@@ -254,8 +245,7 @@ class PDOHelper
      * @param string $limit
      * @return array
      */
-    public function fetchArray($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null)
-    {
+    public function fetchArray($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null) {
         $query = "SELECT {$fields} FROM {$this->getLibName()} WHERE {$where}";
 
         if ($orderBy) {
@@ -282,8 +272,7 @@ class PDOHelper
      * @param string $limit
      * @return array
      */
-    public function fetchCol($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null)
-    {
+    public function fetchCol($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null) {
         $results = $this->fetchArray($where, $params, $fields, $orderBy, $limit);
         return empty($results) ? array() : array_map('reset', $results);
     }
@@ -298,8 +287,7 @@ class PDOHelper
      * @param string $limit
      * @return array
      */
-    public function fetchAll($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null)
-    {
+    public function fetchAll($where = '1', $params = null, $fields = '*', $orderBy = null, $limit = null) {
         $query = "SELECT {$fields} FROM {$this->getLibName()} WHERE {$where}";
 
         if ($orderBy) {
@@ -328,8 +316,7 @@ class PDOHelper
      * @param string $fields
      * @return object
      */
-    public function fetchEntity($where = '1', $params = null, $fields = '*', $orderBy = null)
-    {
+    public function fetchEntity($where = '1', $params = null, $fields = '*', $orderBy = null) {
         $query = "SELECT {$fields} FROM {$this->getLibName()} WHERE {$where}";
 
         if ($orderBy) {
@@ -341,11 +328,9 @@ class PDOHelper
         $statement->execute($params);
         $statement->setFetchMode(PDO::FETCH_CLASS, $this->className);
         return $statement->fetch();
-
     }
 
-    public function fetchCount($where = '1', $pk = "*")
-    {
+    public function fetchCount($where = '1', $pk = "*") {
         $query = "SELECT count({$pk}) as count FROM {$this->getLibName()} WHERE {$where}";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
@@ -359,8 +344,7 @@ class PDOHelper
      * @param string $where
      * @param array $params
      */
-    public function remove($where, $params)
-    {
+    public function remove($where, $params) {
         if (empty($where)) {
             return false;
         }
@@ -370,13 +354,18 @@ class PDOHelper
         return $statement->execute($params);
     }
 
-    public static function updateFieldMap($field)
-    {
+    public static function updateFieldMap($field) {
         return '`' . $field . '`=:' . $field;
     }
 
-    public static function changeFieldMap($field)
-    {
+    public static function changeFieldMap($field) {
         return '`' . $field . '`=`' . $field . '`+:' . $field;
     }
+
+    public function fetchBySql($sql) {
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
 }

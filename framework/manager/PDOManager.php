@@ -1,5 +1,7 @@
 <?php
+
 namespace framework\manager;
+
 use framework\config\PDOConfiguration;
 
 /**
@@ -8,14 +10,15 @@ use framework\config\PDOConfiguration;
  * @author zivn
  * @package framework\manager
  */
-class PDOManager
-{
+class PDOManager {
+
     /**
      * PDO配置
      *
      * @var <PDOConfiguration>array
      */
     private static $configs;
+
     /**
      * PDO实例
      *
@@ -29,8 +32,7 @@ class PDOManager
      * @param string $name
      * @param PDOConfiguration $config
      */
-    public static function addConfigration($name, PDOConfiguration $config)
-    {
+    public static function addConfigration($name, PDOConfiguration $config) {
         self::$configs[$name] = $config;
     }
 
@@ -40,8 +42,7 @@ class PDOManager
      * @param string $name
      * @return \PDO
      */
-    public static function getInstance($name)
-    {
+    public static function getInstance($name) {
         if (empty(self::$instances[$name])) {
             if (empty(self::$configs[$name])) {
                 return null;
@@ -49,13 +50,14 @@ class PDOManager
 
             $config = self::$configs[$name];
             $pdo = new \PDO($config->uri, $config->user, $config->pass, array(
-                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES '{$config->charset}';",
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-            ));
+                        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES '{$config->charset}';",
+                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                    ));
 
             self::$instances[$name] = $pdo;
         }
 
         return self::$instances[$name];
     }
+
 }

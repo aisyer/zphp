@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\config;
 
 /**
@@ -7,14 +8,15 @@ namespace framework\config;
  * @author zivn
  * @package framework\config
  */
-class MultiTokyoTyrantConfiguration
-{
+class MultiTokyoTyrantConfiguration {
+
     /**
      * 主TokyoTyrant服务器dsn链接
      *
      * @var string
      */
     public $masterUri;
+
     /**
      * 从TokyoTyrant服务器dsn链接
      *
@@ -27,27 +29,25 @@ class MultiTokyoTyrantConfiguration
      *
      * @param string $uri
      */
-    public function __construct($masterUri, $slaveUri)
-    {
+    public function __construct($masterUri, $slaveUri) {
         $this->masterUri = $masterUri;
         $this->slaveUri = $slaveUri;
     }
 
-
-    public function tt2mem($rate)
-    {
+    public function tt2mem($rate) {
         $mast = \str_replace("tcp://", "", $this->masterUri);
         $mast = \explode(":", $mast);
         $slave = \str_replace("tcp://", "", $this->slaveUri);
         $slave = \explode(":", $slave);
-        return array( //硬盘ttserver
+        return array(//硬盘ttserver
             'rate' => $rate,
             'enable' => true,
             'host' => $mast[0],
             'port' => trim($mast[1], "/"),
-            'mem' => array( //内存ttserver(当前用户数据主要存取处)
+            'mem' => array(//内存ttserver(当前用户数据主要存取处)
                 array('enable' => true, 'host' => $slave[0], 'port' => trim($slave[1], "/")),
             ),
         );
     }
+
 }

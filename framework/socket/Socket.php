@@ -1,8 +1,9 @@
 <?php
+
 namespace framework\socket;
 
-class Socket
-{
+class Socket {
+
     /**
      * Server Socket
      * @var unknown_type
@@ -11,26 +12,21 @@ class Socket
     public $host = '0.0.0.0';
     public $port;
     public $timeout;
-
     public $buffer_size = 8192;
     public $write_buffer_size = 2097152;
     public $server_block = 0; //0 block,1 noblock
     public $client_block = 0; //0 block,1 noblock
-
     public $base_event;
     public $server_event;
     public $server_sock;
-
     //最大连接数
     public $max_connect = 3000;
-
     //客户端socket列表
     public $client_sock = array();
     //客户端数量
     public $client_num = 0;
 
-    public function __construct($host, $port, $timeout = 30)
-    {
+    public function __construct($host, $port, $timeout = 30) {
         if (!\extension_loaded('pcntl')) {
             throw new \Exception("Require pcntl extension!");
         }
@@ -39,20 +35,17 @@ class Socket
         $this->timeout = $timeout;
     }
 
-    private function init()
-    {
+    private function init() {
         $this->base_event = \event_base_new();
         $this->server_event = \event_new();
     }
 
-    public function setProtocol($protocol)
-    {
+    public function setProtocol($protocol) {
         $this->protocol = $protocol;
         $this->protocol->server = $this;
     }
 
-    private function create($uri, $block = 0)
-    {
+    private function create($uri, $block = 0) {
         $socket = \stream_socket_server($uri, $errno, $errstr);
 
         if (!$socket) {
@@ -63,10 +56,9 @@ class Socket
         return $socket;
     }
 
-    public function accept()
-    {
+    public function accept() {
         $client_socket = \stream_socket_accept($this->server_sock);
-        $client_socket_id = (int)$client_socket;
+        $client_socket_id = (int) $client_socket;
         \stream_set_blocking($client_socket, $this->client_block);
         $this->client_sock[$client_socket_id] = $client_socket;
         $this->client_num++;
@@ -84,8 +76,7 @@ class Socket
      * 运行服务器程序
      * @return unknown_type
      */
-    public function run($num = 1)
-    {
+    public function run($num = 1) {
         $this->init();
         //建立服务器端Socket
         $this->server_sock = $this->create("tcp://{$this->host}:{$this->port}");
@@ -98,7 +89,7 @@ class Socket
             for ($i = 1; $i < $num; $i++) {
                 $pid = \pcntl_fork();
                 if ($pid) {
-
+                    
                 } else {
                     break;
                 }
@@ -114,8 +105,7 @@ class Socket
      * @param $data
      * @return unknown_type
      */
-    public function _send($client_id, $data)
-    {
+    public function _send($client_id, $data) {
         $length = \strlen($data);
         for ($written = 0; $written < $length; $written += $fwrite) {
             $fwrite = \stream_socket_sendto($client_id, substr($data, $written));
@@ -126,8 +116,7 @@ class Socket
         return $written;
     }
 
-    public function send($cilent_id, $data)
-    {
+    public function send($cilent_id, $data) {
         if (isset($this->client_sock[$cilent_id])) {
             return $this->_send($this->client_sock[$cilent_id], $data);
         }
@@ -137,8 +126,7 @@ class Socket
      * 向所有client发送数据
      * @return unknown_type
      */
-    public function sendAll($client_id, $data)
-    {
+    public function sendAll($client_id, $data) {
         foreach ($this->client_sock as $k => $sock) {
             if ($client_id and $k == $client_id) {
                 continue;
@@ -153,8 +141,7 @@ class Socket
      * 关闭服务器程序
      * @return unknown_type
      */
-    public function shutdown()
-    {
+    public function shutdown() {
         //关闭所有客户端
         foreach ($this->client_sock as $k => $sock) {
             $this->_closeSocket($sock, $this->client_event[$k]);
@@ -166,8 +153,7 @@ class Socket
         $this->protocol->onShutdown();
     }
 
-    private function _closeSocket($socket, $event = null)
-    {
+    private function _closeSocket($socket, $event = null) {
         if ($event) {
             \event_del($event);
             \event_free($event);
@@ -180,17 +166,14 @@ class Socket
      * 关闭某个客户端
      * @return unknown_type
      */
-    public function close($client_id)
-    {
+    public function close($client_id) {
         $this->_closeSocket($this->client_sock[$client_id], $this->client_event[$client_id]);
         unset($this->client_sock[$client_id], $this->client_event[$client_id]);
         $this->protocol->onClose($client_id);
         $this->client_num--;
     }
 
-
-    public static function server_handle_connect($server_socket, $events, $server)
-    {
+    public static function server_handle_connect($server_socket, $events, $server) {
         if ($client_id = $server->accept()) {
             $client_socket = $server->client_sock[$client_id];
             //新的事件监听，监听客户端发生的事件
@@ -212,8 +195,7 @@ class Socket
      * @param $arg
      * @return unknown_type
      */
-    public static function server_handle_receive($client_socket, $events, $arg)
-    {
+    public static function server_handle_receive($client_socket, $events, $arg) {
         $server = $arg[0];
         $client_id = $arg[1];
         $data = self::fread_stream($client_socket, $server->buffer_size);
@@ -225,17 +207,16 @@ class Socket
         }
     }
 
-    private static function fread_stream($fp, $length)
-    {
+    private static function fread_stream($fp, $length) {
 
         //return stream_socket_recvfrom($fp, $length);
         $data = false;
         while ($buf = stream_socket_recvfrom($fp, $length)) {
             $data .= $buf;
-            if (strlen($buf) < $length) break;
+            if (strlen($buf) < $length)
+                break;
         }
         return $data;
     }
-
 
 }

@@ -1,4 +1,7 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
+
 namespace framework\view;
 
 use framework\core\IView;
@@ -8,12 +11,11 @@ use framework\core\IView;
  * @author xodger@gmail.com
  * @package framework\view
  */
-class StringView implements IView
-{
+class StringView implements IView {
+
     private $string;
 
-    public function __construct($string)
-    {
+    public function __construct($string) {
         $this->string = $string;
     }
 
@@ -22,8 +24,7 @@ class StringView implements IView
      *
      * @return mixed
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -32,8 +33,7 @@ class StringView implements IView
      *
      * @param mixed $model
      */
-    public function setModel($model)
-    {
+    public function setModel($model) {
         return $this->model = $model;
     }
 
@@ -41,9 +41,9 @@ class StringView implements IView
      * 展示视图
      *
      */
-    public function display()
-    {
+    public function display() {
         header("Content-Type:text/plain; charset=utf-8");
         echo $this->string;
     }
+
 }

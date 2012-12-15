@@ -1,4 +1,6 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\dispatcher;
 
@@ -7,15 +9,12 @@ namespace framework\dispatcher;
  * @author xodger@gmail.com
  * @package framework\dispatcher
  */
-class ShellRequestDispatcher extends RequestDispatcherBase
-{
+class ShellRequestDispatcher extends RequestDispatcherBase {
 
     private $ctrlClassName;
-
     private $ctrlMethodName;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->defaultAction = 'Shell.main';
         if (isset($_SERVER['argv']) && isset($_SERVER['argv'][1])) {
             $act = $_SERVER['argv'][1];
@@ -29,13 +28,12 @@ class ShellRequestDispatcher extends RequestDispatcherBase
         }
     }
 
-    public function getCtrlClassName()
-    {
+    public function getCtrlClassName() {
         return $this->ctrlClassName;
     }
 
-    public function getCtrlMethodName()
-    {
+    public function getCtrlMethodName() {
         return $this->ctrlMethodName;
     }
+
 }

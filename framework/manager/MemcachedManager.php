@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\manager;
 
 use \Memcached;
@@ -10,14 +11,15 @@ use framework\config\MemcachedConfiguration;
  * @author zivn
  * @package framework\manager
  */
-class MemcachedManager
-{
+class MemcachedManager {
+
     /**
      * Memcached配置
      *
      * @var <MemcachedConfiguration>array
      */
     private static $configs;
+
     /**
      * Memcached实例
      *
@@ -30,8 +32,7 @@ class MemcachedManager
      *
      * @param MemcachedConfiguration $config
      */
-    public static function addConfigration($name, MemcachedConfiguration $config)
-    {
+    public static function addConfigration($name, MemcachedConfiguration $config) {
         self::$configs[$name][] = $config;
     }
 
@@ -40,8 +41,7 @@ class MemcachedManager
      *
      * @return \Memcached
      */
-    public static function getInstance($name="", $pconnect=false)
-    {
+    public static function getInstance($name = "", $pconnect = false) {
 
         if (empty(self::$instance[$name])) {
             if (empty(self::$configs[$name])) {
@@ -63,4 +63,5 @@ class MemcachedManager
 
         return self::$instance;
     }
+
 }

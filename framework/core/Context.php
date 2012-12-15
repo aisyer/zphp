@@ -11,8 +11,7 @@ use framework\util;
  * @author xodger@gmail.com
  * @package framework\core
  */
-class Context
-{
+class Context {
 
     private static $rootPath;
     private static $defaultInfoPath = "default";
@@ -25,8 +24,7 @@ class Context
      * @return String
      * @see setInfoPath()
      */
-    public static function getInfoPath()
-    {
+    public static function getInfoPath() {
         if (empty(self::$infoPath)) {
             self::$infoPath = self::getRootPath() . DIRECTORY_SEPARATOR . "inf";
         } else if (!is_dir(self::$infoPath)) {
@@ -36,8 +34,7 @@ class Context
         return Context::$infoPath;
     }
 
-    public static function setDefaultInfoPath($defaultPath)
-    {
+    public static function setDefaultInfoPath($defaultPath) {
         self::$defaultInfoPath = $defaultPath;
     }
 
@@ -46,8 +43,7 @@ class Context
      * @param String $infoPath 项目的配置信息路径
      *
      */
-    public static function setInfoPath($infoPath)
-    {
+    public static function setInfoPath($infoPath) {
         self::$infoPath = $infoPath;
     }
 
@@ -56,8 +52,7 @@ class Context
      * @return String
      * @see setRootPath()
      */
-    public static function getRootPath()
-    {
+    public static function getRootPath() {
         if (empty(self::$rootPath)) {
             try {
                 throw new \Exception("please set root path with Context::setRootPath");
@@ -75,8 +70,7 @@ class Context
      * @return String
      *
      */
-    public static function setRootPath($rootPath)
-    {
+    public static function setRootPath($rootPath) {
         self::$rootPath = $rootPath;
     }
 
@@ -85,8 +79,7 @@ class Context
      * @return String
      * @see setClassesRoot()
      */
-    public static function getClassesRoot($classDir='classes')
-    {
+    public static function getClassesRoot($classDir = 'classes') {
         if (empty(self::$classesRoot)) {
             self::$classesRoot = self::getRootPath() . DIRECTORY_SEPARATOR . $classDir;
         }
@@ -99,8 +92,7 @@ class Context
      * @param $classesRoot
      *
      */
-    public static function setClassesRoot($classesRoot)
-    {
+    public static function setClassesRoot($classesRoot) {
         self::$classesRoot = $classesRoot;
     }
 
@@ -109,8 +101,7 @@ class Context
      * @return String
      * @see setCtrlNamespace()
      */
-    public static function getCtrlNamespace()
-    {
+    public static function getCtrlNamespace() {
         return self::$ctrlNamespace;
     }
 
@@ -118,16 +109,14 @@ class Context
      * 设置Controller的名称空间，该设定主要用于RequestDispatcher对控制器类的定位
      * @param String $ctrlNamespace
      */
-    public static function setCtrlNamespace($ctrlNamespace)
-    {
+    public static function setCtrlNamespace($ctrlNamespace) {
         self::$ctrlNamespace = $ctrlNamespace;
     }
 
     /**
      * 初始化上下文
      */
-    public static function initialize($fileArray = array())
-    {
+    public static function initialize($fileArray = array()) {
         if (!\defined('ROOT_PATH'))
             \define('ROOT_PATH', self::getRootPath());
         $infoPath = self::getInfoPath();

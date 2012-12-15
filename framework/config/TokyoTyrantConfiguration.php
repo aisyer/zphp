@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\config;
 
 /**
@@ -7,8 +8,8 @@ namespace framework\config;
  * @author zivn
  * @package framework\config
  */
-class TokyoTyrantConfiguration
-{
+class TokyoTyrantConfiguration {
+
     /**
      * TokyoTyrant服务器dsn链接
      *
@@ -22,9 +23,9 @@ class TokyoTyrantConfiguration
      *
      * @param string $uri
      */
-    public function __construct($host, $port)
-    {
+    public function __construct($host, $port) {
         $this->host = $host;
         $this->port = $port;
     }
+
 }

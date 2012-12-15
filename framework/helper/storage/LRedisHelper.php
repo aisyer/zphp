@@ -5,12 +5,12 @@ namespace framework\helper\storage;
 use framework\manager;
 
 /**
- * 联合Redis数据处理类
+ * 带leveldb持久的Redis数据处理类
  *
  * @author shenzhe
  * @package framework\helper
  */
-class RedisHelper implements IStorage {
+class LRedisHelper implements IStorage {
 
     private $redis;
     private $sRedis = null;
@@ -38,6 +38,10 @@ class RedisHelper implements IStorage {
         return $userId . '_' . $this->suffix;
     }
 
+    private function dsKey($ukey, $key) {
+        return $ukey . '_' . $key;
+    }
+
     public function getMutilMD($userId, $keys) {
         $uKey = $this->uKey($userId);
         return $this->redis->hMGet($uKey, $keys);
@@ -46,29 +50,36 @@ class RedisHelper implements IStorage {
     public function getMD($userId, $key, $slaveName = "") {
         $uKey = $this->uKey($userId);
         $data = $this->redis->hGet($uKey, $key);
-        /**
-          if(false === $data) {
-          if( $this->redis->hExists($uKey, $key) ) {
-          throw new \Exception("{$key} exist");
-          }
-          }
-         */
+        if (false === $data) {
+            if ($this->redis->hExists($uKey, $key)) {
+                throw new \Exception("{$key} exist");
+            }
+            //从leveldb取数据
+            $dsKey = $this->dsKey($uKey, $key);
+            $data = $this->redis->dsGet($dsKey);
+            if (!empty($data)) { //取到数据，存回redis
+                $this->redis->hSet($uKey, $key, $data);
+            }
+        }
         return $data;
     }
 
     public function getSD($userId, $key, $slaveName = "") {
         $uKey = $this->uKey($userId);
-        $this->setSlave($slaveName);
-        $data = $this->sRedis->hGet($uKey, $key);
-        /**
-          if(false === $data) {
-          if( $this->sRedis->hExists($uKey, $key) ) {
-          throw new \Exception("{$key} exist");
-          }
-          }
-         *
-         */
-        return $data;
+        $dsKey = $this->dsKey($uKey, $key);
+        return $this->redis->dsGet($dsKey);
+    }
+
+    public function getDS($userId, $key) {
+        $uKey = $this->uKey($userId);
+        $dsKey = $this->dsKey($uKey, $key);
+        return $this->redis->dsGet($dsKey);
+    }
+
+    public function setDS($userId, $key, $data) {
+        $uKey = $this->uKey($userId);
+        $dsKey = $this->dsKey($uKey, $key);
+        return $this->redis->dsSet($dsKey, $data);
     }
 
     public function setMD($userId, $key, $data, $cas = false) {
@@ -76,12 +87,24 @@ class RedisHelper implements IStorage {
             return $this->setMDCAS($userId, $key, $data);
         }
         $uKey = $this->uKey($userId);
-        return $this->redis->hSet($uKey, $key, $data);
+        $dsKey = $this->dsKey($uKey, $key);
+        if ($this->redis->dsSet($dsKey, $data)) {
+            return $this->redis->hSet($uKey, $key, $data);
+        }
+
+        return false;
     }
 
     public function addMD($userId, $key, $data) {
         $uKey = $this->uKey($userId);
-        return $this->redis->hSetNx($uKey, $key, $data);
+        $dsKey = $this->dsKey($uKey, $key);
+        if ($this->redis->dsGet($dsKey)) {
+            throw new \Exception("{$dsKey} exist");
+        }
+        if ($this->redis->dsSet($dsKey, $data)) {
+            return $this->redis->hSetNx($uKey, $key, $data);
+        }
+        return false;
     }
 
     public function setMDCAS($userId, $key, $data) {
@@ -91,17 +114,37 @@ class RedisHelper implements IStorage {
         if (false === $result) {
             throw new \Exception('cas error');
         }
-        return $result;
+        $dsKey = $this->dsKey($uKey, $key);
+        if ($this->redis->dsSet($dsKey, $data)) {
+            return true;
+        }
+
+        throw new \Exception('dsSet error');
     }
 
     public function del($userId, $key) {
+
         $uKey = $this->uKey($userId);
-        return $this->redis->hDel($uKey, $key);
+        $dsKey = $this->dsKey($uKey, $key);
+        if ($this->redis->dsDel($dsKey)) {
+            return $this->redis->hDel($uKey, $key);
+        }
+
+        return false;
     }
 
     public function setMultiMD($userId, $keys) {
         $uKey = $this->uKey($userId);
-        return $this->redis->hMSet($uKey, $keys);
+        $dsKeys = [];
+        foreach ($keys as $key => $val) {
+            $dsKey = $this->dsKey($uKey, $key);
+            $dsKeys[$dsKey] = $val;
+        }
+        if ($this->redis->dsMSet($dsKeys)) {
+            return $this->redis->hMSet($uKey, $keys);
+        }
+
+        return false;
     }
 
     public function close() {
@@ -129,7 +172,8 @@ class RedisHelper implements IStorage {
     }
 
     public function setExpire($userId, $key, $time) {
-        return;
+        $uKey = $this->uKey($userId);
+        return $this->redis->setTimeout($uKey, $time);
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\util;
 
 use \Exception;
@@ -8,16 +9,15 @@ use \Exception;
  *
  * @package framework\util
  */
-class Formater
-{
+class Formater {
+
     /**
      * 格式化异常
      *
      * @param Exception $exception
      * @return array
      */
-    public static function formatException(\Exception $exception)
-    {
+    public static function formatException(\Exception $exception) {
         $exceptionHash = array(
             'className' => 'Exception',
             'message' => $exception->getMessage(),
@@ -59,4 +59,5 @@ class Formater
 
         return $exceptionHash;
     }
+
 }

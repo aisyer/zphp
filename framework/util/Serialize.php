@@ -1,32 +1,38 @@
 <?php
-namespace framework\util;
 
+namespace framework\util;
 
 /**
  * 格式转换工具类
  *
  * @package framework\util
  */
-class Serialize 
-{
-    public static function Serialize($data, $type='serialize') {
+class Serialize {
+
+    public static function Serialize($data, $type = 'serialize') {
         switch ($type) {
             case 'igbinary';
-                    return \igbinary_serialize($data);
+                return \igbinary_serialize($data);
+                break;
+            case 'msgpack':
+                return \msgpack_pack($data);
                 break;
             default:
                 return \serialize($data);
         }
-
     }
-    
-    public static function Unserialize($data, $type="serialize") {
+
+    public static function Unserialize($data, $type = "serialize") {
         switch ($type) {
             case 'igbinary';
-                    return \igbinary_unserialize($data);
+                return \igbinary_unserialize($data);
+                break;
+            case 'msgpack':
+                return \msgpack_unpack($data);
                 break;
             default:
                 return \unserialize($data);
         }
     }
+
 }

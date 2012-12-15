@@ -1,4 +1,7 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
+
 namespace framework\view;
 
 use framework\core\IView;
@@ -8,8 +11,8 @@ use framework\core\IView;
  * @author xodger@gmail.com
  * @package framework\view
  */
-class JSONView implements IView
-{
+class JSONView implements IView {
+
     private $model;
 
     /**
@@ -17,8 +20,7 @@ class JSONView implements IView
      *
      * @param mixed $model
      */
-    public function __construct($model)
-    {
+    public function __construct($model) {
         $this->model = $model;
     }
 
@@ -27,8 +29,7 @@ class JSONView implements IView
      *
      * @return mixed
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -37,8 +38,7 @@ class JSONView implements IView
      *
      * @param mixed $model
      */
-    public function setModel($model)
-    {
+    public function setModel($model) {
         return $this->model = $model;
     }
 
@@ -46,9 +46,9 @@ class JSONView implements IView
      * 展示视图
      *
      */
-    public function display()
-    {
+    public function display() {
         header("Content-Type: application/json; charset=utf-8");
         echo json_encode($this->model);
     }
+
 }

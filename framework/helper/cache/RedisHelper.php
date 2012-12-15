@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\helper\cache;
 
 use framework\manager;
@@ -9,12 +10,11 @@ use framework\manager;
  * @author shenzhe
  * @package framework\helper
  */
-class RedisHelper implements ICacheHelper
-{
+class RedisHelper implements ICacheHelper {
+
     private static $redis;
 
-    public function __construct($name="", $pconnect=false)
-    {
+    public function __construct($name = "", $pconnect = false) {
         if (empty(self::$redis)) {
             self::$redis = manager\RedisManager::getInstance($name, $pconnect);
         }
@@ -24,9 +24,7 @@ class RedisHelper implements ICacheHelper
         return true;
     }
 
-
-    public function add($key, $value, $expiration = 0)
-    {
+    public function add($key, $value, $expiration = 0) {
         $result = self::$redis->setNx($key, $value);
         if ($result && $expiration > 0) {
             self::$redis->setTimeout($key, $expiration);
@@ -34,8 +32,7 @@ class RedisHelper implements ICacheHelper
         return $result;
     }
 
-    public function set($key, $value, $expiration = 0)
-    {
+    public function set($key, $value, $expiration = 0) {
         if ($expiration) {
             return $result = self::$redis->setex($key, $expiration, $value);
         } else {
@@ -43,29 +40,24 @@ class RedisHelper implements ICacheHelper
         }
     }
 
-    public function addToCache($key, $value, $expiration = 0)
-    {
+    public function addToCache($key, $value, $expiration = 0) {
         $value = \igbinary_serialize($value);
         return $this->set($key, $value, $expiration);
     }
 
-    public function get($key)
-    {
+    public function get($key) {
         return self::$redis->get($key);
     }
 
-    public function getCache($key)
-    {
+    public function getCache($key) {
         return \igbinary_unserialize($this->get($key));
     }
 
-    public function delete($key)
-    {
+    public function delete($key) {
         return self::$redis->delete($key);
     }
 
-    public function increment($key, $offset = 1)
-    {
+    public function increment($key, $offset = 1) {
         return self::$redis->incrBy($key, $offset);
     }
 
@@ -76,10 +68,8 @@ class RedisHelper implements ICacheHelper
      * @param int $offset
      * @return bool
      */
-    public function decrement($key, $offset = 1)
-    {
+    public function decrement($key, $offset = 1) {
         return self::$redis->decBy($key, $offset);
     }
-
 
 }

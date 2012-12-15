@@ -1,4 +1,5 @@
 <?php
+
 namespace framework\config;
 
 /**
@@ -7,8 +8,8 @@ namespace framework\config;
  * @author zivn
  * @package framework\config
  */
-class RedisConfiguration
-{
+class RedisConfiguration {
+
     /**
      * Redis服务器host
      *
@@ -23,15 +24,14 @@ class RedisConfiguration
      */
     public $port;
 
-
     /**
      * 构造函数
      *
      * @param string $uri
      */
-    public function __construct($host, $port)
-    {
+    public function __construct($host, $port) {
         $this->host = $host;
         $this->port = $port;
     }
+
 }

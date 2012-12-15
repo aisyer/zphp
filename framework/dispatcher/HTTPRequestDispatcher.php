@@ -1,4 +1,6 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\dispatcher;
 
@@ -8,15 +10,12 @@ namespace framework\dispatcher;
  * @author xodger@gmail.com
  * @package framework\dispatcher
  */
-class HTTPRequestDispatcher extends RequestDispatcherBase
-{
+class HTTPRequestDispatcher extends RequestDispatcherBase {
 
     private $ctrlClassName;
-
     private $ctrlMethodName;
 
-    public function __construct()
-    {
+    public function __construct() {
         if (isset($_REQUEST['act'])) {
             $act = $_REQUEST['act'];
             if (\preg_match('/^([a-z_]+)\.([a-z_]+)$/i', $act, $arr)) {
@@ -24,18 +23,17 @@ class HTTPRequestDispatcher extends RequestDispatcherBase
                 $this->ctrlMethodName = $arr[2];
             }
         } else {
-            $this->ctrlClassName = isset($_REQUEST['c']) ? $_REQUEST['c']. 'Ctrl' : 'IndexCtrl';
+            $this->ctrlClassName = isset($_REQUEST['c']) ? \str_replace('/', '\\', $_REQUEST['c']) : 'IndexCtrl';
             $this->ctrlMethodName = isset($_REQUEST['m']) ? $_REQUEST['m'] : 'main';
         }
     }
 
-    public function getCtrlClassName()
-    {
+    public function getCtrlClassName() {
         return $this->ctrlClassName;
     }
 
-    public function getCtrlMethodName()
-    {
+    public function getCtrlMethodName() {
         return $this->ctrlMethodName;
     }
+
 }

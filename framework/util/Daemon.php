@@ -1,8 +1,9 @@
 <?php
+
 namespace framework\util;
 
-class Daemon
-{
+class Daemon {
+
     /**
      * path of pid file
      *
@@ -52,7 +53,6 @@ class Daemon
      */
     private $_execFile = "";
 
-
     /**
      * function handlers for signal number
      *
@@ -60,14 +60,12 @@ class Daemon
      */
     private $_signalHandlerFuns = array();
 
-
     /**
      * set config
      *
      * @param array $configs
      */
-    public function __construct($configs = array())
-    {
+    public function __construct($configs = array()) {
         //load config
         if (is_array($configs))
             $this->setConfigs($configs);
@@ -76,13 +74,12 @@ class Daemon
     /**
      * pctntl is needed,and only works in cli sapi
      */
-    public function _checkRequirement()
-    {
+    public function _checkRequirement() {
         //check if pctnl loaded
         if (!extension_loaded('pcntl'))
             throw new \Exception("daemon needs support of pcntl extension, please enable it.");
 
-        //check sapi name,only for cli    
+        //check sapi name,only for cli
         if ('cli' != php_sapi_name())
             throw new \Exception("daemon only works in cli sapi.");
     }
@@ -97,8 +94,7 @@ class Daemon
      *
      * @param array $configs
      */
-    public function setConfigs($configs)
-    {
+    public function setConfigs($configs) {
         foreach ((array) $configs as $item => $config) {
             switch ($item) {
                 case "pidFilePath":
@@ -129,12 +125,11 @@ class Daemon
      * @param  string $path
      * @return boolean
      */
-    public function setPidFilePath($path)
-    {
+    public function setPidFilePath($path) {
         if (empty($path))
             return false;
 
-        if(!is_dir($path))
+        if (!is_dir($path))
             if (!mkdir($path, 0777))
                 throw new \Exception("setPidFilePath: cannnot make dir {$path}.");
 
@@ -147,8 +142,7 @@ class Daemon
      *
      * @return string
      */
-    public function getPidFilePath()
-    {
+    public function getPidFilePath() {
         return $this->_pidFilePath;
     }
 
@@ -158,8 +152,7 @@ class Daemon
      * @param string $name
      * @return boolean
      */
-    public function setPidFileName($name)
-    {
+    public function setPidFileName($name) {
         if (empty($name))
             return false;
 
@@ -172,8 +165,7 @@ class Daemon
      *
      * @return string
      */
-    public function getPidFileName()
-    {
+    public function getPidFileName() {
         return $this->_pidFileName;
     }
 
@@ -184,8 +176,7 @@ class Daemon
      * @param  boolean $open
      * @return boolean
      */
-    public function setVerbose($open = true)
-    {
+    public function setVerbose($open = true) {
         $this->_verbose = (boolean) $open;
         return true;
     }
@@ -195,8 +186,7 @@ class Daemon
      *
      * @return boolean
      */
-    public function getVerbose()
-    {
+    public function getVerbose() {
         return $this->_verbose;
     }
 
@@ -208,8 +198,7 @@ class Daemon
      * @param  boolean $singleton
      * @return boolean
      */
-    public function setSingleton($singleton = true)
-    {
+    public function setSingleton($singleton = true) {
         $this->_singleton = (boolean) $singleton;
         return true;
     }
@@ -219,8 +208,7 @@ class Daemon
      *
      * @return boolean
      */
-    public function getSingleton()
-    {
+    public function getSingleton() {
         return $this->_singleton;
     }
 
@@ -230,8 +218,7 @@ class Daemon
      * @param  boolean $close
      * @return boolean
      */
-    public function setCloseStdHandle($close = true)
-    {
+    public function setCloseStdHandle($close = true) {
         $this->_closeStdHandle = (boolean) $close;
         return true;
     }
@@ -241,8 +228,7 @@ class Daemon
      *
      * @return boolean
      */
-    public function getCloseStdHandle()
-    {
+    public function getCloseStdHandle() {
         return $this->_closeStdHandle;
     }
 
@@ -254,8 +240,7 @@ class Daemon
      *
      * @return boolean
      */
-    public function start()
-    {
+    public function start() {
         //this line used to put in the __construct,for some reason I move it here.
         $this->_checkRequirement();
 
@@ -263,8 +248,8 @@ class Daemon
         $this->_daemonize();
 
         //default handler for stop
-        if(!pcntl_signal(SIGTERM,  array($this,"signalHandler")))
-            throw new \Exception("Cannot setup signal handler for signo ".SIGTERM);
+        if (!pcntl_signal(SIGTERM, array($this, "signalHandler")))
+            throw new \Exception("Cannot setup signal handler for signo " . SIGTERM);
 
 
         //close file handle STDIN STDOUT STDERR
@@ -288,14 +273,15 @@ class Daemon
      * @param  boolean $force  kill -9 or kill
      * @return boolean
      */
-    public function stop($force = false)
-    {
+    public function stop($force = false) {
         if ($force)
             $signo = SIGKILL; //kill -9
         else
             $signo = SIGTERM; //kill
 
-        //only use in singleton model
+
+            
+//only use in singleton model
         if (!$this->_singleton)
             throw new \Exception("'stop' only use in singleton model.");
 
@@ -315,8 +301,7 @@ class Daemon
     /**
      * restart daemon
      */
-    public function restart()
-    {
+    public function restart() {
         $this->stop();
         //sleep to wait
         sleep(1);
@@ -328,8 +313,7 @@ class Daemon
      * get daemon pid
      * @return int
      */
-    public function getDaemonPid()
-    {
+    public function getDaemonPid() {
         return $this->_getPidFromFile();
     }
 
@@ -338,8 +322,7 @@ class Daemon
      *
      * @param int $signo
      */
-    public function signalHandler($signo)
-    {
+    public function signalHandler($signo) {
         $signFuns = $this->_signalHandlerFuns[$signo];
         if (is_array($signFuns)) {
             foreach ($signFuns as $fun) {
@@ -353,18 +336,16 @@ class Daemon
                 exit;
                 break;
             default:
-                // handle all other signals
+            // handle all other signals
         }
-
     }
 
-    public function addSignalHandler($signo, $fun)
-    {
+    public function addSignalHandler($signo, $fun) {
         if (is_string($fun)) {
             if (!function_exists($fun)) {
                 throw new \Exception("handler function {$fun} not exists");
             }
-        }elseif (is_array($fun)) {
+        } elseif (is_array($fun)) {
             if (!@method_exists($fun[0], $fun[1])) {
                 throw new \Exception("handler method not exists");
             }
@@ -372,15 +353,14 @@ class Daemon
             throw new \Exception("error handler.");
         }
 
-        if(!pcntl_signal($signo,  array($this,"signalHandler")))
+        if (!pcntl_signal($signo, array($this, "signalHandler")))
             throw new \Exception("Cannot setup signal handler for signo {$signo}");
 
         $this->_signalHandlerFuns[$signo][] = $fun;
         return $this;
     }
 
-    public function sendSignal($signo)
-    {
+    public function sendSignal($signo) {
         if (false === ($pid = $this->_getPidFromFile()))
             throw new \Exception("daemon is not running,cannot send signal.");
 
@@ -396,8 +376,7 @@ class Daemon
      * daemon is active?
      * @return boolean
      */
-    public function isActive()
-    {
+    public function isActive() {
         try {
             $pid = $this->_getPidFromFile();
         } catch (\Exception $e) {
@@ -412,7 +391,6 @@ class Daemon
             return true;
     }
 
-
     /**
      * daemonize
      * 1.check running , if singaleton model
@@ -422,11 +400,10 @@ class Daemon
      *
      * @return boolean
      */
-    private function _daemonize()
-    {
+    private function _daemonize() {
         //single model, first check if running
         if ($this->_singleton) {
-            $isRunning  = $this->_checkRunning();
+            $isRunning = $this->_checkRunning();
             if ($isRunning)
                 throw new \Exception("Daemon already running");
         }
@@ -463,11 +440,10 @@ class Daemon
      *
      * @return int
      */
-    private function _getPidFromFile()
-    {
+    private function _getPidFromFile() {
         //if is set
         if ($this->_pid)
-            return (int)$this->_pid;
+            return (int) $this->_pid;
 
         $pidFile = $this->_pidFilePath . "/" . $this->_pidFileName;
         //no pid file,it's the first time of running
@@ -491,27 +467,25 @@ class Daemon
      *
      * @return boolean
      */
-    private function _checkRunning()
-    {
+    private function _checkRunning() {
         $pid = $this->_getPidFromFile();
 
         //no pid file,not running
-        if(false === $pid)
+        if (false === $pid)
             return false;
 
         //get exe file path from pid
-        switch(strtolower(PHP_OS))
-        {
+        switch (strtolower(PHP_OS)) {
             case "freebsd":
                 $strExe = $this->_getFreebsdProcExe($pid);
-                if($strExe === false)
+                if ($strExe === false)
                     return false;
                 $strArgs = $this->_getFreebsdProcArgs($pid);
                 break;
 
             case "linux":
                 $strExe = $this->_getLinuxProcExe($pid);
-                if($strExe === false)
+                if ($strExe === false)
                     return false;
                 $strArgs = $this->_getLinuxProcArgs($pid);
                 break;
@@ -528,8 +502,7 @@ class Daemon
 
         $selfFile = "";
         $sapi = php_sapi_name();
-        switch($sapi)
-        {
+        switch ($sapi) {
             case "cgi":
             case "cgi-fcgi":
                 $selfFile = $_SERVER['argv'][0];
@@ -551,8 +524,7 @@ class Daemon
     /**
      * log Pid
      */
-    private function _logPid()
-    {
+    private function _logPid() {
         $pidFile = $this->_pidFilePath . "/" . $this->_pidFileName;
         if (!$handle = fopen($pidFile, "w")) {
             throw new \Exception("Cannot open pid file {$pidFile} for write");
@@ -569,8 +541,7 @@ class Daemon
      *
      * @return boolean
      */
-    private function _unlinkPidFile()
-    {
+    private function _unlinkPidFile() {
         $pidFile = $this->_pidFilePath . '/' . $this->_pidFileName;
         return @unlink($pidFile);
     }
@@ -582,10 +553,9 @@ class Daemon
      * @param int    $daemonPid
      * @return string
      */
-    private function _getDaemonRealPath($daemonFile, $daemonPid)
-    {
+    private function _getDaemonRealPath($daemonFile, $daemonPid) {
         $daemonFile = trim($daemonFile);
-        if(substr($daemonFile,0,1) !== "/") {
+        if (substr($daemonFile, 0, 1) !== "/") {
             $cwd = $this->_getLinuxProcCwd($daemonPid);
             $cwd = rtrim($cwd, "/");
             $cwd = $cwd . "/" . $daemonFile;
@@ -602,8 +572,7 @@ class Daemon
      * @param  int $pid
      * @return string
      */
-    private function _getFreebsdProcExe($pid)
-    {
+    private function _getFreebsdProcExe($pid) {
         $strProcExeFile = "/proc/" . $pid . "/file";
         if (false === ($strLink = @readlink($strProcExeFile))) {
             //throw new \Exception("Cannot read link file {$strProcExeFile}");
@@ -619,8 +588,7 @@ class Daemon
      * @param  int    $pid
      * @return string
      */
-    private function _getLinuxProcExe($pid)
-    {
+    private function _getLinuxProcExe($pid) {
         $strProcExeFile = "/proc/" . $pid . "/exe";
         if (false === ($strLink = @readlink($strProcExeFile))) {
             //throw new \Exception("Cannot read link file {$strProcExeFile}");
@@ -636,8 +604,7 @@ class Daemon
      * @param   int    $pid
      * @return  string
      */
-    private function _getFreebsdProcArgs($pid)
-    {
+    private function _getFreebsdProcArgs($pid) {
         return $this->_getLinuxProcArgs($pid);
     }
 
@@ -647,13 +614,11 @@ class Daemon
      * @param   int  $pid
      * @return  string
      */
-    private function _getLinuxProcArgs($pid)
-    {
+    private function _getLinuxProcArgs($pid) {
         $strProcCmdlineFile = "/proc/" . $pid . "/cmdline";
 
         if (!$fp = @fopen($strProcCmdlineFile, "r")) {
             throw new \Exception("Cannot open file {$strProcCmdlineFile} for read");
-
         }
         if (!$strContents = fread($fp, 4096)) {
             throw new \Exception("Cannot read or empty file {$strProcCmdlineFile}");
@@ -661,11 +626,11 @@ class Daemon
         fclose($fp);
 
         $strContents = preg_replace("/[^/w/.///-]/", " "
-            , trim($strContents));
+                , trim($strContents));
         $strContents = preg_replace("//s+/", " ", $strContents);
 
         $arrTemp = explode(" ", $strContents);
-        if(count($arrTemp) < 2) {
+        if (count($arrTemp) < 2) {
             throw new \Exception("Invalid content in {$strProcCmdlineFile}");
         }
 
@@ -678,8 +643,7 @@ class Daemon
      * @param   int    $pid
      * @return  string
      */
-    private function _getLinuxProcCwd($pid)
-    {
+    private function _getLinuxProcCwd($pid) {
         $strProcExeFile = "/proc/" . $pid . "/cwd";
         if (false === ($strLink = @readlink($strProcExeFile))) {
             throw new \Exception("Cannot read link file {$strProcExeFile}");
@@ -695,8 +659,7 @@ class Daemon
      * @param  string $str
      * @return boolean
      */
-    private function _out($str)
-    {
+    private function _out($str) {
         if ($this->_verbose) {
             fwrite(STDOUT, $str . "/n");
         }

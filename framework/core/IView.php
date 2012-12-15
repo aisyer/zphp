@@ -1,4 +1,7 @@
-<?php // -*-coding:utf-8; mode:php-mode;-*-
+<?php
+
+// -*-coding:utf-8; mode:php-mode;-*-
+
 namespace framework\core;
 
 /**
@@ -6,8 +9,8 @@ namespace framework\core;
  * @author panzd
  * @package framework\core
  */
-interface IView
-{
+interface IView {
+
     /**
      * 展示视图
      */
