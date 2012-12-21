@@ -1,9 +1,20 @@
 zphp
 ====
 
-a php framework
+a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框架
 
-专用于社交游戏 && 网页游戏的服务器端开发
+要求：php5.3+
+
+如果要支持socket :
+
+    需libevent扩展：https://github.com/shenzhe/php-libevent
+    
+如果需要支持 redis-storage :
+
+     需要使用增强版本phpredis扩展：https://github.com/shenzhe/phpredis
+     增强版redis: https://github.com/qiye/redis-storage
+
+
 
 一个典型的目录结构
 
@@ -12,11 +23,11 @@ a php framework
             IndexCtrl.php
         -- framework //框架目录
     
-        -- inf        //配置目录
-        -- default  //默认配置目录
+    inf        //配置目录
+        --default  //默认配置目录
             define.php
           
-        -- webroot //网站根目录
+    webroot //网站根目录
             index.php
          
 
