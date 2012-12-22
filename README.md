@@ -13,6 +13,13 @@ a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框�
 
      需要使用增强版本phpredis扩展：https://github.com/shenzhe/phpredis
      增强版redis: https://github.com/qiye/redis-storage
+     
+聊天室demo:
+    
+    cd 程序目录
+    php webroot/shell.php Chat.start
+    
+    客户端： telnet host ip （host ,ip 在 inf/default/define.php 里设置 ）
 
 
 
