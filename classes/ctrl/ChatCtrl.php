@@ -3,8 +3,6 @@
 namespace ctrl;
 
 use framework\dispatcher\ShellRequestDispatcher;
-use common;
-use framework\helper;
 
 class ChatCtrl
 {
