@@ -17,7 +17,7 @@ a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框�
 聊天室demo:
     
     cd 程序目录
-    php webroot/shell.php Chat.start
+    php webroot/index.php Chat.start
     
     客户端： telnet host ip （host ,ip 在 inf/default/define.php 里设置 ）
 
