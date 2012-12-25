@@ -3,23 +3,30 @@
 namespace framework\helper\cache;
 
 /**
- * 控制器接口，控制器直接接收处理来自用户的请求，并且将处理结果交给View进行反馈给用户
- * @author xodger@gmail.com
+ * cache接口
+ * @author shenzhe
  * @package framework\core
  */
 interface ICacheHelper {
 
-    function enable();
+	//功能是否开启
+    public function enable();  
 
-    function add($key, $value);
+    //添加
+    public function add($key, $value);
 
-    function set($key, $value);
+    //设置
+    public function set($key, $value);
 
-    function get($key);
+    //获取
+    public function get($key);
 
-    function delete($key);
+    //删除
+    public function delete($key);
 
-    function increment($key, $step = 1);
+    //数字按step自增
+    public function increment($key, $step = 1);
 
-    function decrement($key, $step = 1);
+    //数字按step自减
+    public function decrement($key, $step = 1);
 }
