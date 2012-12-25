@@ -28,14 +28,14 @@ class Memcache
                 $returnData = isset($this->dataArray[$commands[1]]) ? $commands[1]." ".$this->dataArray[$commands[1]] : "$commands[1] 0 0\r\n\r\n";
                 
                 $this->server->send($client_id, "VALUE {$returnData}");
-                $this->server->send("END\r\n");
+                $this->server->send($client_id, "END\r\n");
                 break;
             case 'getMulti':
                 break;
             case 'set':
                 $this->stats['cmd_set'] ++;
                 $this->dataArray[$commands[1]] = $commands[2]." ".$commands[4]." ".substr($data, strpos($data, "\r\n"));
-                $this->server->send("STORED\r\n");
+                $this->server->send($client_id, "STORED\r\n");
                 break;
             case 'setMulti':
                 break;
@@ -45,9 +45,9 @@ class Memcache
                 $this->stats['delete'] ++;
                 if(isset($this->dataArray[$commands[1]])) {
                     unset($this->dataArray[$commands[1]]);
-                    $this->server->send("DELETED\r\n");
+                    $this->server->send($client_id, "DELETED\r\n");
                 } else {
-                    $this->server->send("NOT_FOUND\r\n");
+                    $this->server->send($client_id, "NOT_FOUND\r\n");
                 }
                 break;
             case 'stats':
@@ -62,7 +62,7 @@ class Memcache
                     }
                 }
                 $this->server->send($client_id, $sendData);
-                $this->server->send("END\r\n");
+                $this->server->send($client_id, "END\r\n");
                 break;
         }
     }
