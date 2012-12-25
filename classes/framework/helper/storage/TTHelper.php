@@ -72,11 +72,11 @@ class TTHelper implements IStorage {
                     if ($code == \Memcached::RES_NOTFOUND) {
                         return false;
                     } else {
-                        throw new \common\GameException("null data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
+                        throw new \Exception("null data: {$userId}, {$key}, {$code}");
                     }
                 }
             } else {
-                throw new \common\GameException("error data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
+                throw new \Exception("error data: {$userId}, {$key}, {$code}");
             }
         }
         return $data;
@@ -90,7 +90,7 @@ class TTHelper implements IStorage {
             if ($code == \Memcached::RES_NOTFOUND) {
                 return false;
             } else {
-                throw new \common\GameException("null data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
+                throw new \Exception("null data: {$userId}, {$key}, {$code}");
             }
         }
 
