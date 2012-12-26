@@ -5,10 +5,7 @@ namespace framework\helper\storage;
 use framework\manager;
 
 /**
- * 联合TokyoTyrant数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ *  ttserver 存储处理类
  */
 class TTHelper implements IStorage {
 
@@ -72,11 +69,11 @@ class TTHelper implements IStorage {
                     if ($code == \Memcached::RES_NOTFOUND) {
                         return false;
                     } else {
-                        throw new \Exception("null data: {$userId}, {$key}, {$code}");
+                        throw new \common\GameException("null data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
                     }
                 }
             } else {
-                throw new \Exception("error data: {$userId}, {$key}, {$code}");
+                throw new \common\GameException("error data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
             }
         }
         return $data;
@@ -90,7 +87,7 @@ class TTHelper implements IStorage {
             if ($code == \Memcached::RES_NOTFOUND) {
                 return false;
             } else {
-                throw new \Exception("null data: {$userId}, {$key}, {$code}");
+                throw new \common\GameException("null data: {$userId}, {$key}, {$code}", \common\ERROR::DATA_ERROR);
             }
         }
 

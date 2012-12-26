@@ -7,9 +7,6 @@ use framework\config\MemcachedConfiguration;
 
 /**
  * Memcached管理工具，用于管理Memcached对象的工具。
- *
- * @author zivn
- * @package framework\manager
  */
 class MemcachedManager {
 

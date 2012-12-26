@@ -1,6 +1,5 @@
 <?php
 
-// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\view;
 
@@ -8,8 +7,6 @@ use framework\core\IView;
 
 /**
  * 用于生成JSON数据
- * @author xodger@gmail.com
- * @package framework\view
  */
 class JSONView implements IView {
 

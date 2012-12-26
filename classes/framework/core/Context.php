@@ -1,15 +1,11 @@
 <?php
 
-// // -*-coding:utf-8; mode:php-mode;-*-
-
 namespace framework\core;
 
 use framework\util;
 
 /**
  * 框架的上下文，司整个框架的配置信息及初始化信息
- * @author xodger@gmail.com
- * @package framework\core
  */
 class Context {
 
@@ -22,7 +18,7 @@ class Context {
     /**
      * 取得项目的配置信息路径
      * @return String
-     * @see setInfoPath()
+     * @see setInfozPath()
      */
     public static function getInfoPath() {
         if (empty(self::$infoPath)) {

@@ -2,12 +2,11 @@
 
 namespace framework\socket;
 
+/**
+ *  socket 类
+ *  本socket需要pcntl 和 libevent支持
+ */
 class Socket {
-
-    /**
-     * Server Socket
-     * @var unknown_type
-     */
     public $protocol;
     public $host = '0.0.0.0';
     public $port;

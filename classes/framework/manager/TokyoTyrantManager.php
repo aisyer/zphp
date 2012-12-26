@@ -6,9 +6,6 @@ use framework\config\TokyoTyrantConfiguration;
 
 /**
  * TokyoTyrant管理工具，用于管理TokyoTyrant对象的工具。
- *
- * @author zivn
- * @package framework\manager
  */
 class TokyoTyrantManager {
 

@@ -4,8 +4,6 @@ namespace framework\core;
 
 /**
  * 控制器接口，控制器直接接收处理来自用户的请求，并且将处理结果交给View进行反馈给用户
- * @author xodger@gmail.com
- * @package framework\core
  */
 interface IController {
 

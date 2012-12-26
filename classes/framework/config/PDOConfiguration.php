@@ -4,8 +4,6 @@ namespace framework\config;
 
 /**
  * 数据库配置信息
- *
- * @package framework\config
  */
 class PDOConfiguration {
 

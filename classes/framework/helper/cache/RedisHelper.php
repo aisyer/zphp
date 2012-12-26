@@ -5,10 +5,7 @@ namespace framework\helper\cache;
 use framework\manager;
 
 /**
- * 联合Redis数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ * Redis cache处理类
  */
 class RedisHelper implements ICacheHelper {
 

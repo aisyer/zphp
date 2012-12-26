@@ -6,8 +6,6 @@ use \Exception;
 
 /**
  * 格式转换工具类
- *
- * @package framework\util
  */
 class Formater {
 

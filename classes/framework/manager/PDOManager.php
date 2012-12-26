@@ -6,9 +6,6 @@ use framework\config\PDOConfiguration;
 
 /**
  * PDO管理工具，用于管理PDO对象的工具。
- *
- * @author zivn
- * @package framework\manager
  */
 class PDOManager {
 

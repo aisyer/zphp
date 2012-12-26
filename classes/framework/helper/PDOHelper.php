@@ -7,8 +7,6 @@ use \PDO;
 /**
  * PDO数据处理类
  *
- * @author pzd
- * @package framework\helper
  */
 class PDOHelper {
 

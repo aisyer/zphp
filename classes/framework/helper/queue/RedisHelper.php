@@ -5,12 +5,9 @@ namespace framework\helper\queue;
 use framework\manager;
 
 /**
- * 联合Redis数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ * redis 队列处理类
  */
-class RedisHelper {
+class RedisHelper implements IQueue {
 
     private static $redis;
 
@@ -21,11 +18,11 @@ class RedisHelper {
     }
 
     public function addQueue($key, $data) {
-        return self::$redis->rPush($key, \igbinary_serialize($data));
+        return self::$redis->rPush($key, $data);
     }
 
     public function getQueue($key) {
-        return \igbinary_unserialize(self::$redis->lPop($key));
+        return self::$redis->lPop($key);
     }
 
 }

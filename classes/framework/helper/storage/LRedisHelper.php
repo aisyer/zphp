@@ -5,10 +5,11 @@ namespace framework\helper\storage;
 use framework\manager;
 
 /**
- * 带leveldb持久的Redis数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ * redis-stroage 存储处理类
+ * redis-stroage 是一个支持leveldb做为持久存储的redis增强版本
+ * redis-stroage获取：https://github.com/qiye/redis-storage
+ * 如要支持redis-stroage，需要使用增强版本phpredis扩展
+ * 增强版本phpredis扩展地址：https://github.com/shenzhe/phpredis
  */
 class LRedisHelper implements IStorage {
 

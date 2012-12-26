@@ -4,8 +4,6 @@ namespace framework\util;
 
 /**
  * 格式转换工具类
- *
- * @package framework\util
  */
 class Serialize {
 

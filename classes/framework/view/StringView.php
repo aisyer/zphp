@@ -1,15 +1,11 @@
 <?php
 
-// -*-coding:utf-8; mode:php-mode;-*-
-
 namespace framework\view;
 
 use framework\core\IView;
 
 /**
  * 字符串视图，向用户输出字符串
- * @author xodger@gmail.com
- * @package framework\view
  */
 class StringView implements IView {
 

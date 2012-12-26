@@ -3,30 +3,21 @@
 namespace framework\helper\cache;
 
 /**
- * cache接口
- * @author shenzhe
- * @package framework\core
+ *  cache 接口，申明了必需的一些方法
  */
 interface ICacheHelper {
 
-	//功能是否开启
-    public function enable();  
+    function enable();
 
-    //添加
-    public function add($key, $value);
+    function add($key, $value);
 
-    //设置
-    public function set($key, $value);
+    function set($key, $value);
 
-    //获取
-    public function get($key);
+    function get($key);
 
-    //删除
-    public function delete($key);
+    function delete($key);
 
-    //数字按step自增
-    public function increment($key, $step = 1);
+    function increment($key, $step = 1);
 
-    //数字按step自减
-    public function decrement($key, $step = 1);
+    function decrement($key, $step = 1);
 }

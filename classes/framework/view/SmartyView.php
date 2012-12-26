@@ -7,8 +7,6 @@ use framework\config\SmartyConfiguration;
 
 /**
  * 用于用Smarty展示数据
- *
- * @package framework\view
  */
 class SmartyView implements IView {
 

@@ -3,10 +3,7 @@
 namespace framework\helper\cache;
 
 /**
- * 联合Redis数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ * Xcache cache处理类
  */
 class XcacheHelper implements ICacheHelper {
 

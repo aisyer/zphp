@@ -6,8 +6,6 @@ namespace framework\util;
 
 /**
  * 单例管理类，用于通过类名获取该类的一个实例，并且保证在一次PHP的运行周期里只创建一次该实例
- * @author xodger@gmail.com
- * @package framework\util
  */
 class Singleton {
 

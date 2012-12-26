@@ -4,8 +4,6 @@ namespace framework\config;
 
 /**
  * Smarty配置信息
- * @author xodger@gmail.com
- * @package framework\config
  */
 class SmartyConfiguration {
 

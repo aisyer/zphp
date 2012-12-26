@@ -5,10 +5,12 @@ namespace framework\manager;
 use framework\config\RedisConfiguration;
 
 /**
- * Redis管理工具，用于管理Redis对象的工具。
+ * redis-stroage管理工具，用于管理Redis对象的工具。
  *
- * @author zivn
- * @package framework\manager
+ * redis-stroage 是一个支持leveldb做为持久存储的redis增强版本
+ * redis-stroage获取：https://github.com/qiye/redis-storage
+ * 如要支持redis-stroage，需要使用增强版本phpredis扩展
+ * 增强版本phpredis扩展地址：https://github.com/shenzhe/phpredis
  */
 class LRedisManager {
 

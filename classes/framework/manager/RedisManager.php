@@ -7,9 +7,6 @@ use \Redis;
 
 /**
  * Redis管理工具，用于管理Redis对象的工具。
- *
- * @author zivn
- * @package framework\manager
  */
 class RedisManager {
 

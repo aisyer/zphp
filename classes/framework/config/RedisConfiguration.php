@@ -4,9 +4,6 @@ namespace framework\config;
 
 /**
  * Redis配置信息
- *
- * @author zivn
- * @package framework\config
  */
 class RedisConfiguration {
 

@@ -1,17 +1,14 @@
 <?php
 
-// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\view;
 
 use framework\core\IView;
 
 /**
- * 用于生成JSON数据
- * @author xodger@gmail.com
- * @package framework\view
+ * 用于生成msgpack数据
  */
-class MsgPackView implements IView {
+class MsgpackView implements IView {
 
     private $model;
 
@@ -48,7 +45,7 @@ class MsgPackView implements IView {
      */
     public function display() {
         header("Content-Type: application/octet-stream; charset=utf-8");
-        echo msgpack_pack($this->model);
+        echo \msgpack_pack($this->model);
     }
 
 }

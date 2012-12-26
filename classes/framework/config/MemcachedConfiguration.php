@@ -3,10 +3,7 @@
 namespace framework\config;
 
 /**
- * Memcached配置信息
- *
- * @author zivn
- * @package framework\config
+ * Memcached配置
  */
 class MemcachedConfiguration {
 

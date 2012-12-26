@@ -1,13 +1,10 @@
 <?php
 
-// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\dispatcher;
 
 /**
  * 用于执行控制台脚本的请求转发器。
- * @author xodger@gmail.com
- * @package framework\dispatcher
  */
 class ShellRequestDispatcher extends RequestDispatcherBase {
 

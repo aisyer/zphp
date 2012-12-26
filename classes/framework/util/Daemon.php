@@ -2,6 +2,10 @@
 
 namespace framework\util;
 
+/**
+ *  当php做成后台服务，可以支持damon方式启动
+ */
+
 class Daemon {
 
     /**

@@ -1,6 +1,5 @@
 <?php
 
-// -*-coding:utf-8; mode:php-mode;-*-
 
 namespace framework\dispatcher;
 
@@ -10,9 +9,8 @@ use framework\core\IController;
 use framework\core\Context;
 
 /**
- * IRequestDispatcher的抽象实现，它实现了dispatch方法，并且定义了getCtrlClassName和getCtrlMethodName两个抽象方法，其子类只需实现这两个方法即可。
- * @author xodger@gmail.com
- * @package framework\dispatcher
+ * IRequestDispatcher的抽象实现，它实现了dispatch方法，
+ * 并且定义了getCtrlClassName和getCtrlMethodName两个抽象方法，其子类只需实现这两个方法即可。
  */
 abstract class RequestDispatcherBase implements IRequestDispatcher {
 

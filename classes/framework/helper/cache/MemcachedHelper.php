@@ -5,10 +5,7 @@ namespace framework\helper\cache;
 use framework\manager;
 
 /**
- * Memcached数据处理类
- *
- * @author zivn
- * @package framework\helper
+ * Memcached cache处理类
  */
 class MemcachedHelper implements ICacheHelper {
 

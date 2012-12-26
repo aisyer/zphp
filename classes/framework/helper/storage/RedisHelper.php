@@ -5,10 +5,7 @@ namespace framework\helper\storage;
 use framework\manager;
 
 /**
- * 联合Redis数据处理类
- *
- * @author shenzhe
- * @package framework\helper
+ * redis 存储处理类
  */
 class RedisHelper implements IStorage {
 

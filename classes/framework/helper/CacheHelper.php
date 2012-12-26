@@ -2,6 +2,10 @@
 
 namespace framework\helper;
 
+/**
+ *  cache处理工厂
+ *
+ */
 class CacheHelper {
 
     private static $cache = array();

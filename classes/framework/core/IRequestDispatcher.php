@@ -5,9 +5,8 @@
 namespace framework\core;
 
 /**
- * 请求分发器，用于将用户的请求分配给Controller类及其方法进行执行处理，实现该接口主要是实现Controller的类和方法的查找规则。
- * @author xodger@gmail.com
- * @package framework\core
+ * 请求分发器，用于将用户的请求分配给Controller类及其方法进行执行处理，
+ * 实现该接口主要是实现Controller的类和方法的查找规则。
  */
 interface IRequestDispatcher {
 
