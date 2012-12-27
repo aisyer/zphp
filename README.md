@@ -5,16 +5,20 @@ a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框�
 
 要求：php5.3+
 
-如果要支持socket :
+socket需要libevent扩展 :
+========================
 
-    需libevent扩展：https://github.com/shenzhe/php-libevent
+扩展git地址：https://github.com/shenzhe/php-libevent
     
-如果需要支持 redis-storage :
+特别支持redis-storage :
+=====================
 
-     需要使用增强版本phpredis扩展：https://github.com/shenzhe/phpredis
-     增强版redis: https://github.com/qiye/redis-storage
+增强片phpredis扩展：https://github.com/shenzhe/phpredis
+
+redis-stroage地址: https://github.com/qiye/redis-storage
      
 聊天室demo:
+=============
     
     cd 程序目录
     php webroot/index.php Chat.start
@@ -23,7 +27,8 @@ a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框�
 
 
 
-一个典型的目录结构
+一个典型的框架目录结构
+==================
 
     classes
         -- ctrl  //ctrl目录
