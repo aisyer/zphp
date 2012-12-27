@@ -8,14 +8,15 @@ a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框�
 socket需要libevent扩展 :
 ========================
 
-扩展git地址：https://github.com/shenzhe/php-libevent
+地址：https://github.com/shenzhe/php-libevent
     
 特别支持redis-storage :
 =====================
 
-增强片phpredis扩展：https://github.com/shenzhe/phpredis
-
 redis-stroage地址: https://github.com/qiye/redis-storage
+
+增强版phpredis扩展：https://github.com/shenzhe/phpredis
+
      
 聊天室demo:
 =============
