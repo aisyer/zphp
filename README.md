@@ -2,6 +2,7 @@ zphp
 ====
 
 a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框架
+
 zphp是一个极轻的框架，核心只提供类自动载入，路由功能，跟据游戏的特性，提供：存储(ttserver, redis, redis-storage)，cache(apc, memcache, redis, xcache), db(mysql)，队列(beanstalk, redis)，socket功能，你可能会发现存储居然没有mysql,这就是游戏,特别是社交游戏的特性：高并发，读写几乎都是并存的，没有明显冷数据，mysql不太适合这个场景
 
 要求：php5.3+
@@ -10,6 +11,7 @@ socket需要libevent扩展 :
 ========================
 
 地址：https://github.com/shenzhe/php-libevent
+
 2012-12-29: 更换socket层为：react, 独立于框架，类node语法，使socket使用更稳定和方便。
 
     
