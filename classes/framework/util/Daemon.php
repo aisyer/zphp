@@ -248,12 +248,22 @@ class Daemon {
         //this line used to put in the __construct,for some reason I move it here.
         $this->_checkRequirement();
 
+        $signals = array(
+            SIGINT => "SIGINT",
+            SIGHUP => "SIGHUP",
+            SIGQUIT => "SIGQUIT",
+        );
+
+        foreach ($signals as $signal => $name) {
+            if (!pcntl_signal($signal, array($this, "signalHandler"))) {
+                throw new \Exception("Install signal handler for {$name} failed");
+            }
+        }
+
         //do daemon
         $this->_daemonize();
 
-        //default handler for stop
-        if (!pcntl_signal(SIGTERM, array($this, "signalHandler")))
-            throw new \Exception("Cannot setup signal handler for signo " . SIGTERM);
+
 
 
         //close file handle STDIN STDOUT STDERR
@@ -336,8 +346,11 @@ class Daemon {
 
         //default action
         switch ($signo) {
+            case SIGINT:
+            case SIGQUIT:
             case SIGTERM:
-                exit;
+                $this->_unlinkPidFile();
+                exit(0);
                 break;
             default:
             // handle all other signals

@@ -7,6 +7,7 @@ use framework\core\IView;
 use framework\core\IRequestDispatcher;
 use framework\core\IController;
 use framework\core\Context;
+use framework\util\Daemon;
 
 /**
  * IRequestDispatcher的抽象实现，它实现了dispatch方法，
@@ -21,7 +22,23 @@ abstract class RequestDispatcherBase implements IRequestDispatcher {
      */
     protected $defaultAction;
 
+    protected $daemon = false; //是否开启守护进程
+
     public function dispatch() {
+        if($this->daemon) {
+            $this->_daemon();
+        } else {
+            $this->_dispatch();
+        }
+    }
+
+    private function _daemon() {
+        $deamon = new Daemon($GLOBALS['DAEMON_CONFIG']);
+        $deamon->start();
+        $this->_dispatch();
+    }
+
+    public function _dispatch() {
         $ctrlClass = Context::getCtrlNamespace() . "\\" . $this->getCtrlClassName();
         $ctrlMethod = $this->getCtrlMethodName();
 

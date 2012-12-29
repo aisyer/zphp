@@ -1,18 +1,26 @@
 zphp
 ====
 
+@author: shenzhe (泽泽，半桶水)
+
+@email: shenzhe163@gmail.com
+
 a php framework,  专用于社交游戏 && 网页游戏的服务器端开发框架
 
 zphp是一个极轻的框架，核心只提供类自动载入，路由功能，跟据游戏的特性，提供：存储(ttserver, redis, redis-storage)，cache(apc, memcache, redis, xcache), db(mysql)，队列(beanstalk, redis)，socket功能，你可能会发现存储居然没有mysql,这就是游戏,特别是社交游戏的特性：高并发，读写几乎都是并存的，没有明显冷数据，mysql不太适合这个场景
 
 要求：php5.3+
 
+更新
+===================
+
+2012-12-29: 更换socket层为：react, 独立于框架，类node语法，使socket使用更稳定和方便。
+2012-12-29: 增加daemon支持（命令行后加 -d 即可），可以把服务变成一个daemon, 可接收进程控制信号，进行服务关闭，重启，重载等 
+
 socket需要libevent扩展 :
 ========================
 
 地址：https://github.com/shenzhe/php-libevent
-
-2012-12-29: 更换socket层为：react, 独立于框架，类node语法，使socket使用更稳定和方便。
 
     
 特别支持redis-storage :
@@ -27,9 +35,11 @@ redis-stroage地址: https://github.com/qiye/redis-storage
 =============
     
     cd 程序目录
-    php webroot/index.php Chat.new
+    php webroot/index.php Chat.new -d (以daemon方式启动)
     
     客户端： telnet host ip （host ,ip 在 inf/default/define.php 里设置 ）
+
+    php webroot/index.php Chat.stop (关闭服务)
     
 php版key=>value数据库Demo (基于memcache协议):
 =====================

@@ -73,5 +73,10 @@ class ChatCtrl
         $loop->run();
     }
 
+    public function stop() {
+        $deamon = new \framework\util\Daemon($GLOBALS['DAEMON_CONFIG']);
+        $deamon->stop();
+    }
+
 
 }

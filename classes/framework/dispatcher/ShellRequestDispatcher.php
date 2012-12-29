@@ -13,8 +13,15 @@ class ShellRequestDispatcher extends RequestDispatcherBase {
 
     public function __construct() {
         $this->defaultAction = 'Shell.main';
-        if (isset($_SERVER['argv']) && isset($_SERVER['argv'][1])) {
-            $act = $_SERVER['argv'][1];
+        if (isset($_SERVER['argv'])) {
+            if(isset($_SERVER['argv'][1])) {
+                $act = $_SERVER['argv'][1];
+            }
+
+            if("-d" == end($_SERVER['argv'])) {
+                $this->daemon = true;
+            }
+
         } else {
             $act = $this->defaultAction;
         }
